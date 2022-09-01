@@ -13,7 +13,7 @@ jq '.items[] |  .date_modified[:10] + "-" + .title + "_" + ".mkv" + "&" + .url' 
 | tr ' ' '_' \
 | sed -e 's,["],,g' -e 's,_*\.mkv,.mkv,g' -e 's,[:()!],_,g' \
 | while read f url; do 
-    url=${url//_/:}
+    url=${url//https_/https:}
     if [ -L "$outfolder/$f" ]; then 
         echo "$f exists $url"; 
     else
