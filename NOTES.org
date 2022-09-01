@@ -1,0 +1,10 @@
+more information with some google api 
+https://stackoverflow.com/questions/29752447/how-to-get-a-youtube-channel-rss-feed-after-2015-april-20-without-v3-api
+
+
+mentions
+https://github.com/RSS-Bridge/rss-bridge
+may be could (ab)use a sample of it at
+https://feed.eugenemolotov.ru/?action=display&bridge=Youtube&context=By+playlist+Id&p=PLaDrN74SfdT7Ueqtwn_bXo1MuSWT0ji2w&duration_min=&duration_max=&format=json
+?
+
