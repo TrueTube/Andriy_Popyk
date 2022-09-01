@@ -12,3 +12,11 @@ git config annex.security.allowed-ip-addresses all
 ```
 
 to allow `git-annex` to download using youtube-dl.
+
+You would also need to set locally or globally
+
+```
+git config core.quotePath false
+```
+
+to see proper unicode filenames in output of `git` commands.
