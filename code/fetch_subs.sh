@@ -14,12 +14,12 @@ for f in "$@"; do
         echo "$fbase: already has some vtts" # : $vtts"
         continue
     fi
-    if grep -q "^'$f'" $subs_done; then
+    if grep -q "^$f" $subs_done; then
         echo "$f: already was getting subs, might have none"
         continue
     fi
     url=$(git annex whereis --in web "$f" | awk '/^ *web:/{print $2;}')
     echo "$fbase: getting some for $url"
-    yt-dlp --write-subs --write-auto-subs -k --sub-lang=en,ua,ru --skip-download -o "$fbase" "$url" \
-    && echo -e "$f\t$url" >> "$subs_done"
+    yt-dlp --write-subs --write-auto-subs -k --sub-lang=en,ua,ru --skip-download -o "$fbase" "$url" && status=ok || status=error 
+    echo -e "$f\t$url\t$(date)\t$status" >> "$subs_done"
 done
