@@ -14,3 +14,5 @@ git config -f .datalad/config -l | awk -F. '/^playlist\./{print $2}' | sort | un
    echo "Updating feed $name"
    datalad run -m "Updated feed $name ($id) under $path" bash -c "code/import_feed.sh '$id' $path && code/fetch_subs.sh ${path%/}/*.mkv"
 done
+
+datalad push
