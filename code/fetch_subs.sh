@@ -11,11 +11,11 @@ for f in "$@"; do
     fbase=${f%.*}
     vtts=$(/bin/ls -d "$fbase".*.vtt 2>/dev/null || :)
     if [ ! -z "$vtts" ]; then
-        echo "$fbase: already has some vtts" # : $vtts"
+        # echo "$fbase: already has some vtts" # : $vtts"
         continue
     fi
     if grep -q "^$f" $subs_done; then
-        echo "$f: already was getting subs, might have none"
+        # echo "$f: already was getting subs, might have none"
         continue
     fi
     url=$(git annex whereis --in web "$f" | awk '/^ *web:/{print $2;}')
