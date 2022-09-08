@@ -1,18 +1,33 @@
 #!/bin/bash
 
-cd $(dirname $0)
+cmd=$(readlink -f $0)
+cd $(dirname $cmd)
 cd ..
 
-config() {
-    git config -f .datalad/config "$@"
+
+function do_update_all () {
+
+    config() {
+        git config -f .datalad/config "$@"
+    }
+
+    git config -f .datalad/config -l | awk -F. '/^playlist\./{print $2}' | sort | uniq \
+    | while read name; do
+       path=$(config playlist.$name.path 2>/dev/null || echo $name/)
+       id=$(config playlist.$name.id)
+       echo "Updating feed $name"
+       datalad run -m "Updated feed $name ($id) under $path" bash -c "code/import_feed.sh '$id' $path && code/fetch_subs.sh ${path%/}/*.mkv"
+    done
+
+    datalad push
+
 }
 
-git config -f .datalad/config -l | awk -F. '/^playlist\./{print $2}' | sort | uniq \
-| while read name; do
-   path=$(config playlist.$name.path 2>/dev/null || echo $name/)
-   id=$(config playlist.$name.id)
-   echo "Updating feed $name"
-   datalad run -m "Updated feed $name ($id) under $path" bash -c "code/import_feed.sh '$id' $path && code/fetch_subs.sh ${path%/}/*.mkv"
-done
-
-datalad push
+# might want to redo and use lockfile as described in
+# https://www.baeldung.com/linux/bash-ensure-instance-running#using-lockfile
+if [ -n "${_UPDATE_LOCKED}" ]; then
+    do_update_all
+else
+    # lock itself and if already running -- exit as nothing happened
+    _UPDATE_LOCKED=1 flock -n -E 1 .git/update.lck "$cmd" || exit 0
+fi
