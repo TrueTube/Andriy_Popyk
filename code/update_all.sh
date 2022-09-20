@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu -o pipefail
+
 cmd=$(readlink -f $0)
 cd $(dirname $cmd)
 cd ..
@@ -25,9 +27,9 @@ function do_update_all () {
 
 # might want to redo and use lockfile as described in
 # https://www.baeldung.com/linux/bash-ensure-instance-running#using-lockfile
-if [ -n "${_UPDATE_LOCKED}" ]; then
+if [ -n "${_UPDATE_LOCKED:-}" ]; then
     do_update_all
 else
     # lock itself and if already running -- exit as nothing happened
-    _UPDATE_LOCKED=1 flock -n -E 1 .git/update.lck "$cmd" || exit 0
+    _UPDATE_LOCKED=1 flock -n -E 0 .git/update.lck "$cmd"
 fi
