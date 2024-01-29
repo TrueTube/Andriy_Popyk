@@ -17,5 +17,7 @@ file -L "$@" | grep HTML | sed -e 's,.mkv:.*,.mkv,g' \
         echo "  WARNING: again just fetched HTML -- will keep the previous one"
         rm "$f"
         git checkout "$f"
+    else
+        git annex get "$f"
     fi
 done
