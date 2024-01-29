@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -eu
+
+file -L "$@" | grep HTML | sed -e 's,.mkv:.*,.mkv,g' \
+| while read f; do
+    url=$(git annex whereis --json "$f" | jq -r '.whereis[] | select(.description == "web") | .urls[]' | head -n 1)
+    echo -e "\nLooking at $f from $url"
+    if [ -z "$url" ]; then
+        echo "  WARNING: no URL for $f, skipping"
+        continue
+    fi
+    echo "  Refetching $f from $url"
+    rm "$f"
+    git annex addurl --file="$f" "$url"
+    if file -L "$f" | grep HTML; then
+        echo "  WARNING: again just fetched HTML -- will keep the previous one"
+        rm "$f"
+        git checkout "$f"
+    fi
+done
