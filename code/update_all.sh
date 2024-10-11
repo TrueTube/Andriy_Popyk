@@ -29,7 +29,7 @@ function do_update_all () {
 # https://www.baeldung.com/linux/bash-ensure-instance-running#using-lockfile
 if [ -n "${_UPDATE_LOCKED:-}" ]; then
     do_update_all
-    git annex get -J5  --not --metadata unavailable=true  .
+    git annex get -J5  --not --metadata unavailable=*  .
 else
     # lock itself and if already running -- exit as nothing happened
     _UPDATE_LOCKED=1 flock -n -E 0 .git/update.lck "$cmd"
