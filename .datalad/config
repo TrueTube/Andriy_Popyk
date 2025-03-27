@@ -7,9 +7,9 @@
 #[playlist "Комендантські_балачки"]
 #    path = Комендантські_балачки/
 #    id = PLSWNjjvqdBIurRnfaLtmOpu-Y-4vmIXvC
-[playlist "Тематичні_передачі"]
-    path = Тематичні_передачі/
-    id = PLSWNjjvqdBIv7JqCzANolV4hs8-RvkirH
-[playlist "Суспільство_і_політика"]
-    path = Суспільство_і_політика/
-    id = PLSWNjjvqdBIsKntshAmYH7HBCv2HLlowX
+#[playlist "Тематичні_передачі"]
+#    path = Тематичні_передачі/
+#    id = PLSWNjjvqdBIv7JqCzANolV4hs8-RvkirH
+#[playlist "Суспільство_і_політика"]
+#    path = Суспільство_і_політика/
+#    id = PLSWNjjvqdBIsKntshAmYH7HBCv2HLlowX
