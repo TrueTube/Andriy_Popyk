@@ -12,7 +12,7 @@ file -L "$@" | grep HTML | sed -e 's,.mkv:.*,.mkv,g' \
     fi
     echo "  Refetching $f from $url"
     rm "$f"
-    git annex addurl --file="$f" --relaxed "$url"
+    git annex addurl --no-raw --file="$f" --relaxed "$url"
     if file -L "$f" | grep HTML; then
         echo "  WARNING: again just fetched HTML -- will keep the previous one"
         rm "$f"
