@@ -6,6 +6,8 @@ cmd=$(readlink -f $0)
 cd $(dirname $cmd)
 cd ..
 
+source ~/miniconda3.sh
+conda activate deno 
 
 function do_update_all () {
 
